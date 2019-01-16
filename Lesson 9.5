@@ -1,0 +1,26 @@
+<?php
+
+function convertToUah($price, $type, $currency)
+{
+	$rate = $currency[$type]['rate'];
+	return $price * $rate;
+}
+
+function getDiscount($price, $discount, $discountType, $priceType, $currency)
+{
+	$rate = $currency[$priceType]['rate'];
+	switch ($discountType) {
+		case 'percent':
+			$discountValue = $price * $discount / 100;
+			$discountValue *= $rate;
+			break;
+		case 'value':
+			$discountValue = $discount * $rate;
+			break;
+		default:
+			$discountValue = 0;
+			break;
+	}
+
+	return $discountValue;
+}
