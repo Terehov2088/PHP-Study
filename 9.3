@@ -1,0 +1,50 @@
+<?php 
+
+	require_once('products.php');
+	require_once('lib.php');
+?>
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Products</title>
+</head>
+<body>
+	<h1>Products</h1>
+	<table>
+		<thead>
+			<tr>
+				<td>Title</td>
+				<td>Price, UAH</td>
+				<td>Discount</td>
+			</tr>
+		</thead>
+		<tbody>
+			<?php foreach ($products as $product) : ?>
+				<?php
+
+					$priceUah = convertToUah(
+						$product['price_val'],
+						$product['price_type'],
+						$currency
+					);
+					$discount = getDiscount(
+						$product['price_val'],
+						$product['discount_val'],
+						$product['discount_type'],
+						$product['price_type'],
+						$currency
+					);
+				?>
+				<tr>
+					<td><?= $product['title'] ?></td>
+					<td><?= $priceUah - $discount ?></td>
+					<td><?= $discount ?></td>
+				</tr>
+			<?php endforeach; ?>
+		</tbody>
+	</table>
+
+</body>
+</html>
